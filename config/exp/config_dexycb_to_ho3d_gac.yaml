@@ -1,0 +1,52 @@
+base:
+  mode: train #val_test
+  adapt_mode: gac
+  gpu_id: 0
+  root: /your root path/
+  data_root: ${exp.base.root}/data
+  output_dir: ${exp.base.root}/results/hand-pose-seg/dexycb-ho3d
+  dataset: none
+  source_dataset: dexycb
+  target_dataset: ho3d
+  modality: rgb
+  jt_num: 21
+  img_size: 128
+  batch_size: 16
+  val_test_batch_size: 64
+  num_workers: 6
+  val_test_num_workers: 2
+  epoch: 50
+  debug: False
+  cube: 300
+  aug_type: none
+  aug_type_s: none
+  aug_type_t: none
+  save_all: False
+  save_all_bests: False
+  pose_2d: True
+  resume: False
+  eval_shuffle: True
+  eval_model_name: net
+model:
+  downsample: 2 # [1,2,4]
+  downsample_joint: 1
+  heatmap_std: 4
+  joint_net: hourglass_joint_2d
+  load_joint_model: None
+  kernel_size: 1  #0.4  # for offset
+pretrain:
+  load_joint_model_rgb: /set your trained model/
+loss:
+  pose_loss_type: SmoothL1Loss
+  seg_loss_type: BCE
+  dense_2d_weight: 1e7
+  coord_weight: 1e4
+  seg_weight: 100.0
+  unsup_coef: 0.1
+solver:
+  joint_lr: 1e-6
+  beta1: 0.5
+  beta1_2: 0.9
+  joint_scheduler: none
+  step_epoch: 10
+  early_stop: 15

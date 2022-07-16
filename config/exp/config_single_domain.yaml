@@ -1,0 +1,44 @@
+base:
+  mode: train #val_test
+  adapt_mode: none
+  gpu_id: 0
+  root: /your root path/
+  data_root: ${exp.base.root}/data
+  dataset: dexycb
+  output_dir: ${exp.base.root}/results/hand-pose-seg/${exp.base.dataset}
+  modality: rgb
+  jt_num: 21
+  img_size: 128
+  batch_size: 32 #10
+  val_test_batch_size: 64
+  num_workers: 6
+  val_test_num_workers: 2
+  epoch: 100
+  debug: False
+  cube: 300
+  eval_shuffle: True
+  aug_type: weak
+  aug_type_s: none
+  aug_type_t: none
+  save_all_bests: False
+  pose_2d: True
+  resume: 0
+model:
+  downsample: 2 # [1,2,4]
+  downsample_joint: 1
+  heatmap_std: 4
+  joint_net: hourglass_joint_2d
+  load_joint_model: None
+  kernel_size: 1  #0.4  # for offset
+loss:
+  pose_loss_type: SmoothL1Loss
+  seg_loss_type: BCE
+  dense_2d_weight: 1e7
+  coord_weight: 1e4
+  seg_weight: 100.0
+solver:
+  joint_lr: 0.001
+  beta1: 0.5
+  joint_scheduler: auto
+  step_epoch: 10
+  early_stop: 10
